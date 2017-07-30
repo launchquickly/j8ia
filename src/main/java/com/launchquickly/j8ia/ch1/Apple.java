@@ -4,14 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class Apple {
+import com.launchquickly.j8ia.ch2.AppleFormatter;
 
+public class Apple {
+	
 	public static boolean isGreenApple(final Apple apple) {
 		return "green".equals(apple.getColor());
 	}
 
 	public static boolean isHeavyApple(final Apple apple) {
 		return apple.getWeight() > 150;
+	}
+
+	public static void prettyPrintApple(final List<Apple> inventory, final AppleFormatter formatter) {
+		for (final Apple apple : inventory) {
+			final String output = formatter.accept(apple);
+			System.out.println(output);
+		}
 	}
 
 	static List<Apple> filterApples(final List<Apple> inventory, final Predicate<Apple> p) {
