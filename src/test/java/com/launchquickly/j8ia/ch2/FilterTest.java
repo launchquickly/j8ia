@@ -1,6 +1,7 @@
 package com.launchquickly.j8ia.ch2;
 
 import static com.launchquickly.j8ia.ch1.Apple.prettyPrintApple;
+import static com.launchquickly.j8ia.ch2.Filter.filter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +12,15 @@ import org.junit.Test;
 
 import com.launchquickly.j8ia.ch1.Apple;
 
-public class AppleFormatterTest {
+public class FilterTest {
 
 	private List<Apple> inventory;
 
 	@Test
-	public void printUsingFancyFormatter() {
-		prettyPrintApple(this.inventory, new AppleFancyFormatter());
-	}
+	public void printRedApples() {
+		final List<Apple> redApples = filter(this.inventory, (Apple apple) -> "red".equals(apple.getColor()));
 
-	@Test
-	public void printUsingSimpleFormatter() {
-		prettyPrintApple(this.inventory, new AppleSimpleFormatter());
+		prettyPrintApple(redApples, new AppleFancyFormatter());
 	}
 
 	@Before
