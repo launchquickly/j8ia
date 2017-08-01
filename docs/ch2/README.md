@@ -11,24 +11,26 @@
 - A function that returns a boolean
 - Often used when implementing the 'Strategy pattern'
 
-## Soring with a Comparator
+## Sorting with a Comparator
 
 sorting a list with a lambda
-'''
-inventory.sort(
-  (Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight()));
-'''
+
+```
+   inventory.sort(
+     (Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight()));
+```
 
 ## Runnable
 
 lambda expression being used to run a thread
-'''
-final Thread t = new Thread(() -> System.out.println("Hello world"));
-'''
+
+```
+   final Thread t = new Thread(() -> System.out.println("Hello world"));
+```
 
 ### GUI event handling
 
-'''
-button.setAction((ActionEvent event) -> label.setText("Sent!!"));
-'''
+```
+   button.setAction((ActionEvent event) -> label.setText("Sent!!"));
+```
 

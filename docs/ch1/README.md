@@ -20,7 +20,7 @@ these are 'named' methods.
 **lambdas** (or anonymous functions) can also be used to communicate intent or in cases where the behaviour is only used once:
 
 ```
-filterApples(inventory, (Apple a) -> "green".equals(a.getColor()) );
+   filterApples(inventory, (Apple a) -> "green".equals(a.getColor()) );
 ```
 
 ## Streams
