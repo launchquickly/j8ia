@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import com.launchquickly.j8ia.ch2.AppleFormatter;
 
 public class Apple {
-	
+
 	public static boolean isGreenApple(final Apple apple) {
 		return "green".equals(apple.getColor());
 	}

@@ -1,6 +1,4 @@
-# Chapter 2 - Java 8: passing code with behaviour parameterization
-
-- Behaviour parameterisation
+# Chapter 2 - Passing code with behaviour parameterization
 
 ## Behaviour parameterisation
 
