@@ -56,3 +56,37 @@ To avoid the memory performance overhead of autoboxing when passing primitives t
 None of the predefined functional interfaces allow for a checked exception to be thrown. You have 2 options if you need to throw a checked exception:
 - define your own functional interface
 - wrap the lambda in a try/catch block
+
+## Type checking, type inference, and restrictions
+
+- target type - is the type expected for the lambda expression inside the context it is used
+- the same lambda expression can be associated with different functional interfaces if they have a compatible abstract method signature
+- the java compiler can also infer the types of a lambda:
+```
+   Comparator<Apple> c = (a1, a2) -> a1.getWeight().compareTo(a2.getWeight());
+```
+
+### Using local variables
+
+Lambda expressions are allowed to use **free variables** (defined in an outer scope) but they need to be declared final or be effectively final. e.g. assigned to only once.  
+
+## Method references
+
+Let you reuse existing method definitions and pass them like lambdas.
+
+There are 3 types:  
+- static method e.g. Integer::parseInt
+- instance method of an arbitary type e.g. String::length
+- instance method of an existing object e.g. expensiveTransaction::getValue
+
+### Constructor references
+
+- ClassName::new can be used to create a reference to an existing constructor
+```
+   Supplier<Apple> c1 = Apple::new;
+   Apple a1 = c1.get();
+   
+   Function<Integer, Apple> c2 = Apple::new;
+   Apple a2 = c2.apply(110);
+```    
+- The ability to refer to a constructor without instantiating it enables interesting applications.
