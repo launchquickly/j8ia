@@ -90,3 +90,39 @@ There are 3 types:
    Apple a2 = c2.apply(110);
 ```    
 - The ability to refer to a constructor without instantiating it enables interesting applications.
+
+## Composing lamda expressions
+
+Several functional interfaces include convenience methods that allow amongst other things composition. Such as combining 2 predicates into a more complicated one using the **or** operation or composing functions that allow the result of one to become the input to another function. This is made possible by the introduction of **default methods** in Java 8.
+
+### Composing Comparators
+
+- reverse order
+```
+   inventory.sort(comparing(Apple::getWeight).reversed());
+```
+- chaining comparators
+```
+   inventory.sort(comparing(Apple::getWeight)
+            .thenComparing(Apple::getCountry));
+```
+
+### Composing Predicates
+
+- negate
+```
+   Predicate<Apple> notRed = redApple.negate();
+```
+- and
+```
+   Predicate<Apple> redAndHeavyApple = redApple.and(a -> a.getWeight() > 150);
+```
+- or
+```
+      Predicate<Apple> redAndHeavyAppleOrGreen = redAndHeavyApple.or(a -> "green".equals(a.getColor()));
+```
+
+### Composing Functions
+
+- andThen - applies a given function to an input and then applies another to the result: f.andThen(g) == g(f(x))
+- compose - applies input to compose function then apply function to result:  f.compose(g) == f(g(x))
