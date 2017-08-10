@@ -15,8 +15,8 @@ public class Menu {
 								new Dish("rice", true, 350, Type.OTHER),
 								new Dish("season fruit", true, 120, Type.OTHER),
 								new Dish("pizza", true, 550, Type.OTHER), 
-								new Dish("prawns", false, 300, Type.MEAT),
-								new Dish("salmon", false, 450, Type.MEAT));
+								new Dish("prawns", false, 300, Type.FISH),
+								new Dish("salmon", false, 450, Type.FISH));
 	}
 
 }
