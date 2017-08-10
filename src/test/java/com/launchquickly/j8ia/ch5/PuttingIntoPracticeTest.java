@@ -12,7 +12,36 @@ import org.junit.Test;
 public class PuttingIntoPracticeTest {
 	
 	@Test
-	public void findAllCambridgeTradersSortedByName() {
+	public void _1_FindAllTransactionsFor2011SortedByValueAscending() {
+		final List<Transaction> result = Transactions.get().stream()
+															.filter(t -> t.getYear() == 2011)
+															.sorted(comparing(Transaction::getValue))
+															.collect(toList());
+		assertEquals(2, result.size());
+		for (Transaction t : result) {
+			assertEquals(2011, t.getYear());
+		}
+		assertEquals("Brian", result.get(0).getTrader().getName());
+		assertEquals(300, result.get(0).getValue());
+		assertEquals("Raoul", result.get(1).getTrader().getName());
+		assertEquals(400, result.get(1).getValue());
+	}
+	
+	@Test
+	public void _2_FindUniqueCities() {
+		
+		final List<String> result = Transactions.get().stream()
+											.map(t -> t.getTrader().getCity())
+											.distinct()
+											.collect(toList());
+		
+		assertEquals(2, result.size());
+		assertTrue(result.stream().anyMatch(t -> t.equals("Cambridge")));
+		assertTrue(result.stream().anyMatch(t -> t.equals("Milan")));
+	}
+	
+	@Test
+	public void _3_FindAllCambridgeTradersSortedByName() {
 		final List<Transaction> result = Transactions.get().stream()
 															.filter(t -> "Cambridge".equals(t.getTrader().getCity()))
 															.sorted((t1, t2) -> t1.getTrader().getName().compareTo(t2.getTrader().getName()))
@@ -33,32 +62,28 @@ public class PuttingIntoPracticeTest {
 	}
 	
 	@Test
-	public void findAllTransactionsFor2011SortedByValueAscending() {
-		final List<Transaction> result = Transactions.get().stream()
-															.filter(t -> t.getYear() == 2011)
-															.sorted(comparing(Transaction::getValue))
-															.collect(toList());
-		assertEquals(2, result.size());
-		for (Transaction t : result) {
-			assertEquals(2011, t.getYear());
-		}
-		assertEquals("Brian", result.get(0).getTrader().getName());
-		assertEquals(300, result.get(0).getValue());
-		assertEquals("Raoul", result.get(1).getTrader().getName());
-		assertEquals(400, result.get(1).getValue());
+	public void _4_BuildAlphabeticalStringFromTradersName() {
+		final String result = Transactions.get().stream()
+							                     .map(t -> t.getTrader().getName())
+							                     .distinct()
+							                     .sorted((t1, t2) -> t1.compareTo(t2))
+							                     .reduce("", (a, b) -> a + b);
+		
+		assertEquals("AlanBrianMarioRaoul", result);			
 	}
 	
 	@Test
-	public void findUniqueCities() {
+	public void _5_AreThereAnyTradersFromMilan() {
 		
-		final List<String> result = Transactions.get().stream()
-											.map(t -> t.getTrader().getCity())
-											.distinct()
-											.collect(toList());
-		
-		assertEquals(2, result.size());
-		assertTrue(result.stream().anyMatch(t -> t.equals("Cambridge")));
-		assertTrue(result.stream().anyMatch(t -> t.equals("Milan")));
+		assertTrue(Transactions.get().stream().anyMatch(t -> "Milan".equals(t.getTrader().getCity())));
+	}
+	
+	@Test
+	public void _6_PrintCambridgeTradersTransactionValues() {
+		Transactions.get().stream()
+		                  .filter(t -> "Cambridge".equals(t.getTrader().getCity()))
+		                  .map(v -> v.getValue())
+		                  .forEach(System.out::println);
 	}
 	
 }
