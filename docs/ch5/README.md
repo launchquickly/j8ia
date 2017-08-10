@@ -28,6 +28,19 @@ Using **findAny** as opposed to **findFirst** is less constraining when using pa
 
 Some operations don't have to process the whole stream to produce a result. These include *allMatch*, *noneMatch*, *findFirst* and *findAny* as well as *limit*. 
 
-## java.util.Optioinal
+### java.util.Optioinal
 
 Used to represent the existence or absence of a value
+
+## Reducing
+
+Reduce queries combine all the elements in a stream repeatedly to produce a single value. In functional programming-languages this is referred to as a *fold*.
+
+- **reduce** method takes 2 arguments: initial value and BinaryOperator<T> to combine 2 elements and produce a new value
+- **reduce** method that takes 1 argument but returns an Optional object to indicate a result may be absent
+
+Using *reduce* instead of step-by-step iteration has the benefit of being able to be run in parallel. This does however mean that the lambdas passed to reduce cannot change state.
+
+## Stateless vs stateful
+
+It is important to recognise that some stream operations such as *sorted* or *distinct* are stateful which can be problematic if the data stream is large or infinite.
