@@ -42,23 +42,19 @@ public class PuttingIntoPracticeTest {
 	
 	@Test
 	public void _3_FindAllCambridgeTradersSortedByName() {
-		final List<Transaction> result = Transactions.get().stream()
-															.filter(t -> "Cambridge".equals(t.getTrader().getCity()))
-															.sorted((t1, t2) -> t1.getTrader().getName().compareTo(t2.getTrader().getName()))
+		final List<Trader> result = Transactions.get().stream()
+				                                            .map(Transaction::getTrader)
+															.filter(t -> "Cambridge".equals(t.getCity()))
+															.distinct()
+															.sorted(comparing(Trader::getName))
 															.collect(toList());
-		assertEquals(4, result.size());
-		for (Transaction t : result) {
-			assertEquals("Cambridge", t.getTrader().getCity());
+		assertEquals(3, result.size());
+		for (Trader t : result) {
+			assertEquals("Cambridge", t.getCity());
 		}
-		assertEquals("Alan", result.get(0).getTrader().getName());
-		assertEquals(950, result.get(0).getValue());
-		assertEquals("Brian", result.get(1).getTrader().getName());
-		assertEquals(300, result.get(1).getValue());
-		
-		assertEquals("Raoul", result.get(2).getTrader().getName());
-		assertEquals(1000, result.get(2).getValue());
-		assertEquals("Raoul", result.get(3).getTrader().getName());
-		assertEquals(400, result.get(3).getValue());
+		assertEquals("Alan", result.get(0).getName());
+		assertEquals("Brian", result.get(1).getName());
+		assertEquals("Raoul", result.get(2).getName());
 	}
 	
 	@Test
@@ -66,8 +62,8 @@ public class PuttingIntoPracticeTest {
 		final String result = Transactions.get().stream()
 							                     .map(t -> t.getTrader().getName())
 							                     .distinct()
-							                     .sorted((t1, t2) -> t1.compareTo(t2))
-							                     .reduce("", (a, b) -> a + b);
+							                     .sorted()
+							                     .reduce("", (t, n) -> t + n);
 		
 		assertEquals("AlanBrianMarioRaoul", result);			
 	}
@@ -82,7 +78,7 @@ public class PuttingIntoPracticeTest {
 	public void _6_PrintCambridgeTradersTransactionValues() {
 		Transactions.get().stream()
 		                  .filter(t -> "Cambridge".equals(t.getTrader().getCity()))
-		                  .map(v -> v.getValue())
+		                  .map(Transaction::getValue)
 		                  .forEach(System.out::println);
 	}
 	
