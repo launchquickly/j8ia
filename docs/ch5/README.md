@@ -44,3 +44,32 @@ Using *reduce* instead of step-by-step iteration has the benefit of being able t
 ## Stateless vs stateful
 
 It is important to recognise that some stream operations such as *sorted* or *distinct* are stateful which can be problematic if the data stream is large or infinite.
+
+## Numeric Streams
+
+*IntStream*, *DoubleStream*, and *LongStream* are *primitive stream specializations* of the stream interface that avoid boxing costs by having specialized elements of int, double and long respectively. They also have new methods to perform common numeric reductions, along with methods to convert back to streams of objects.
+
+### Specialized methods
+
+- sum
+- max
+- min
+- average
+
+- *boxed* method converts numeric stream to a Stream
+
+Primitive specialisations of Optional which may be used by the primitive stream specialisations:
+- OptionalInt
+- OptionalDouble
+- OptionalLong
+
+The **orElse** of these objects can be used to explicitly provide a default value if desired.
+
+### Numeric ranges
+
+- *range* - creates range of values excluding end value
+- *rangeClosed* - creates range of values including end value
+
+### Mapping to numeric stream
+
+This is done via the *mapToInt*, *mapToDouble*, and *mapToLong* methods of streams
