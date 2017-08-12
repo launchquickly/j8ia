@@ -79,3 +79,5 @@ This is done via the *mapToInt*, *mapToDouble*, and *mapToLong* methods of strea
 - Stream.of(.., .., ..)
 - Stream.empty()
 - Files.lines 
+- Stream.iterate
+- Stream.generate
