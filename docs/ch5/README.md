@@ -73,3 +73,9 @@ The **orElse** of these objects can be used to explicitly provide a default valu
 ### Mapping to numeric stream
 
 This is done via the *mapToInt*, *mapToDouble*, and *mapToLong* methods of streams
+
+## Building Streams
+
+- Stream.of(.., .., ..)
+- Stream.empty()
+- Files.lines 
