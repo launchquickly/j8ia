@@ -42,5 +42,9 @@ There are often multiple ways to perform the same operation. Choose the most spe
 
 Multi-level grouping is possible using multiple nested groupingBy to define multi-level criteria where n-level groupings have a result of n-level Map modeling an n-level tree structure.
 
+### Partitioning
 
+A special case of grouping.  
 
+- **partitioningBy** method takes a predicate called a *partioning function* that classifies elements of a stream into either a true or a false group
+- **partitioningBy** method that takes a second argument will use this to perform a further collector operation on all elements in the stream classified into the same partition
