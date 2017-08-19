@@ -14,6 +14,13 @@ class PrimePartitioner {
 				        .collect(
 				        		partitioningBy(candidate -> isPrime(candidate)));
 	}
+	
+	Map<Boolean, List<Integer>> partitionPrimesWithCustomCollector(final int n) {
+		return IntStream.rangeClosed(2, n)
+				        .boxed()
+				        .collect(
+				        		new PrimeNumbersCollector());
+	}
 
 	private boolean isPrime(final int candidate) {
 		final int candidateRoot = (int) Math.sqrt((double) candidate);

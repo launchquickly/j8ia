@@ -48,3 +48,15 @@ A special case of grouping.
 
 - **partitioningBy** method takes a predicate called a *partioning function* that classifies elements of a stream into either a true or a false group
 - **partitioningBy** method that takes a second argument will use this to perform a further collector operation on all elements in the stream classified into the same partition
+
+## java.util.stream.Collector interface
+
+Consists of a set of methods that provide a blueprint for how to implement specific reductions operations (collectors).  
+
+The **characteristics** method provides a set of characteristics that's a list of hints used by the *collect* method itself to know which optimizations (e.g. parallelization) it's allowed to employ while performing the reduction operation. 
+
+The 3 possible characteristics are:
+- **UNORDERED** if result of reduction is unaffected by the order in which items in the stream are traversed and accumulated
+- **CONCURRENT** if the *accumulator* function can be called concurrently from multiple threads
+- **IDENTITY_FINISH** if the function returned by the *finisher* method is the identity one and its application can be omitted
+
