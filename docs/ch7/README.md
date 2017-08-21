@@ -41,3 +41,58 @@ A *parallel* stream is a stream that splits its elements into multiple chunks, p
 - consider how well the data structure underlying the stream decomposes - ArrayList - good, LinkedList - poorly
 - characteristics of a stream and how intermediate operations through the pipeline modify them should be considered
 - does the terminal operation have a cheap or expensive merge step
+
+## fork/join framework
+
+- designed to recursively spilt a parallelizable task into smaller tasks
+- implementation of *ExecutorService* interface which distributes subtasks to worker threads in a thread pool called *ForkJoinPool*
+- tasks for the pool are subclasses of *RecursiveTask<R>*, where R is the type of the result produced by the parallelized task
+- this involves implementing a single method
+```
+         protected abstract R compute();
+```
+- this method defines:
+  - the logic of splitting the task into subtasks
+  - the algorithm to produce the result of a single subtask when it's no longer possible or convenient to further divide it
+- pseudocode would be similar to 
+```
+   if (task is small enough or no longer divisible)
+     compute task sequentially
+   else
+     split task in two subclasses
+     call this method recursively possibly further splitting each subtask
+     wait for completion of all subtasks
+     combing the results of each subtask
+```
+- Having more than one instance of *ForkJoinPool* does not normally make sense and typically is a singleton
+
+### Best practices for using fork/join framework
+
+- **join** method blocks so should only be called *after* the computation of both subtasks have been started
+- **invoke** method should never be used within a *RecursiveTask*
+- **fork** method on a subtask is the way to schedule it on a *ForkJoinPool* but should not be called on the left and right task. Instead call *compute* on one of them to reuse the same thread and avoid overhead caused by unnecessary allocation of a further task on the pool
+- call to *compute* occurs in a different thread so cannot be debugged using and IDE debugger
+- fork/join may not be faster than a sequential alternative
+
+**Work stealing** - forking a large number of fine-grained tasks is usually a good choice as it means that each subtask takes exactly the same amount of time. This allows tasks to more or less be evenly divided on all threads in teh *ForkJoinPool*. Work stealing allows these tasks to be redistributed and balanced among worker threads were one or more threads complete their work befor the other threads.
+
+## java.util.Spliterator
+
+*splitable iterator* - defines how a parallel stream can split the data it traverses
+
+- **tryAdvance** method sequentially consume elements of the *Spliterator* one by one, returning true if there are more elements to be traversed
+- **trySplit** method is used to partition off some of its elements to a second *Spliterator*
+- **estimateSize** method provides an estimation of the number of elements remaining to be traversed
+- **characeristics** method returns and int encoding the set of characteristics of the Spliterator itself
+  - ORDERED
+  - DISTINCT
+  - SORTED
+  - SIZED
+  - NONNULL
+  - IMMUTABLE
+  - CONCURRENT
+  - SUBSIZED
+  
+- they are used to traverse the elements of a stream in parallel
+- Java 8 provide a default *Spliterator* implementation for all data structures in the Collection framework
+- the splitting process is recursive, with null returned from **trySplit** when it can be split no more
