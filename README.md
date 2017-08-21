@@ -7,3 +7,4 @@ Scratch repo for working through [Java 8 in Action book](https://www.manning.com
 - [Chapter 4 Introducing streams](docs/ch4/README.md)
 - [Chapter 5 - Working with streams](docs/ch5/README.md)
 - [Chapter 6 - Collecting data with streams](docs/ch6/README.md)
+- [Chapter 7 - Parallel data processing and performance](docs/ch7/README.md)
